@@ -5,10 +5,10 @@ class Usuario{
   String tel;
   String email;
   String senha;
-  bool keepOn;
+  //bool keepOn;
 
   Usuario(
-      {this.nome, this.cpf, this.tel, this.email, this.senha, this.keepOn});
+      {this.nome, this.cpf, this.tel, this.email, this.senha});
 
   Usuario.fromJson(Map<String, dynamic> json) {
     nome = json['nome'];
@@ -16,7 +16,7 @@ class Usuario{
     tel = json['tel'];
     email = json['email'];
     senha = json['senha'];
-    keepOn = json['keepOn'];
+    //keepOn = json['keepOn'];
   }
 
   Map<String, dynamic> toJson() {
@@ -26,7 +26,7 @@ class Usuario{
     data['tel'] = this.tel;
     data['email'] = this.email;
     data['senha'] = this.senha;
-    data['keepOn'] = this.keepOn;
+    //data['keepOn'] = this.keepOn;
     return data;
   }
 

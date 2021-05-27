@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:pet_adote/controllers/cadastro_controller.dart';
+import 'package:pet_adote/models/usuario_model.dart';
 
 class Cadastro extends StatefulWidget {
   @override
@@ -172,6 +174,7 @@ class _CadastroState extends State<Cadastro> {
                   //ação ao apertar o botao
                   onPressed: () => {
                     //Navigator.pushNamed(context, '/cadastro2'),
+                    cadastrarUser()
                   },
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -201,5 +204,17 @@ class _CadastroState extends State<Cadastro> {
         ),
       ),
     );
+  }
+
+  void cadastrarUser() {
+    print(_nomeController.text);
+    Usuario user = Usuario();
+    user.nome = _nomeController.text;
+    user.cpf = _cpfController.text;
+    user.tel = _telController.text;
+    user.email = _emailController.text;
+    user.senha = _senhaController.text;
+    CadastroUserController controller = CadastroUserController(user);
+    controller.salveUserDB();
   }
 }
