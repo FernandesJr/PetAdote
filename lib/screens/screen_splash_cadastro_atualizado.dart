@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:pet_adote/screens/loading.dart';
 
-class SplashAtualizado extends StatefulWidget {
+class Splash_atualizado extends StatefulWidget {
   @override
-  _SplashAtualizadoState createState() => _SplashAtualizadoState();
+  _Splash_atualizadoState createState() => _Splash_atualizadoState();
 }
 
-class _SplashAtualizadoState extends State<SplashAtualizado> {
+class _Splash_atualizadoState extends State<Splash_atualizado> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(

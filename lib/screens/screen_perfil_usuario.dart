@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 
-class PerfilUsuario extends StatefulWidget {
+class Perfil_Usuario extends StatefulWidget {
   @override
-  _PerfilUsuarioState createState() => _PerfilUsuarioState();
+  _Perfil_UsuarioState createState() => _Perfil_UsuarioState();
 }
 
-class _PerfilUsuarioState extends State<PerfilUsuario> {
+class _Perfil_UsuarioState extends State<Perfil_Usuario> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(

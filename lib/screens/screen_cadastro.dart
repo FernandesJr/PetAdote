@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:pet_adote/controllers/cadastro_controller.dart';
-import 'package:pet_adote/models/usuario_model.dart';
 
 class Cadastro extends StatefulWidget {
   @override
@@ -8,13 +6,6 @@ class Cadastro extends StatefulWidget {
 }
 
 class _CadastroState extends State<Cadastro> {
-  TextEditingController _nomeController = TextEditingController();
-  TextEditingController _cpfController = TextEditingController();
-  TextEditingController _telController = TextEditingController();
-  TextEditingController _emailController = TextEditingController();
-  TextEditingController _senhaController = TextEditingController();
-  TextEditingController _repSenhaController = TextEditingController();
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -52,7 +43,6 @@ class _CadastroState extends State<Cadastro> {
 
               //Form de Nome completo
               TextFormField(
-                controller: _nomeController,
                 autofocus: false,
                 keyboardType: TextInputType.text,
                 style: new TextStyle(
@@ -70,7 +60,6 @@ class _CadastroState extends State<Cadastro> {
 
               //Form de CPF
               TextFormField(
-                controller: _cpfController,
                 autofocus: false,
                 keyboardType: TextInputType.number,
                 style: new TextStyle(
@@ -88,7 +77,6 @@ class _CadastroState extends State<Cadastro> {
 
               //Form de Numero
               TextFormField(
-                controller: _telController,
                 autofocus: false,
                 keyboardType: TextInputType.number,
                 style: new TextStyle(
@@ -106,7 +94,6 @@ class _CadastroState extends State<Cadastro> {
 
               //Form de E-mail
               TextFormField(
-                controller: _emailController,
                 autofocus: false,
                 keyboardType: TextInputType.text,
                 style: new TextStyle(
@@ -124,7 +111,6 @@ class _CadastroState extends State<Cadastro> {
 
               //Form de Senha
               TextFormField(
-                controller: _senhaController,
                 autofocus: false,
                 obscureText: true,
                 keyboardType: TextInputType.text,
@@ -143,7 +129,6 @@ class _CadastroState extends State<Cadastro> {
 
               //Form de Repetir senha
               TextFormField(
-                controller: _repSenhaController,
                 autofocus: false,
                 obscureText: true,
                 keyboardType: TextInputType.text,
@@ -164,17 +149,12 @@ class _CadastroState extends State<Cadastro> {
               //Botao Cadastrar
               ButtonTheme(
                 height: 50.0,
-                child: ElevatedButton(
-                  style: ButtonStyle(
-                      backgroundColor:
-                          MaterialStateProperty.all<Color>(Color(0xff2be0b5)),
-                      minimumSize:
-                          MaterialStateProperty.all<Size>(Size(220, 50))),
+                child: RaisedButton(
+                  color: Color(0xff2be0b5),
                   //
                   //ação ao apertar o botao
                   onPressed: () => {
-                    //Navigator.pushNamed(context, '/cadastro2'),
-                    cadastrarUser()
+                    Navigator.pushNamed(context, '/cadastro2'),
                   },
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -204,17 +184,5 @@ class _CadastroState extends State<Cadastro> {
         ),
       ),
     );
-  }
-
-  void cadastrarUser() {
-    print(_nomeController.text);
-    Usuario user = Usuario();
-    user.nome = _nomeController.text;
-    user.cpf = _cpfController.text;
-    user.tel = _telController.text;
-    user.email = _emailController.text;
-    user.senha = _senhaController.text;
-    CadastroUserController controller = CadastroUserController(user);
-    controller.salveUserDB();
   }
 }

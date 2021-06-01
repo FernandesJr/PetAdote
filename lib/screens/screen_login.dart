@@ -1,16 +1,17 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
-import 'package:pet_adote/controllers/login_controller.dart'; //Apelida a API
+import 'package:pet_adote/controllers/login_controller.dart';
 
-class Login extends StatelessWidget {
-  TextEditingController emailTxt = TextEditingController();
-  TextEditingController senhaTxt = TextEditingController();
-  LoginController controllerView = LoginController();
+class Login extends StatefulWidget {
+  @override
+  _LoginState createState() => _LoginState();
+}
 
-  Uri url =
-      Uri.http('pet-adote-33f93-default-rtdb.firebaseio.com', '/usuarios.json');
+class _LoginState extends State<Login> {
+  //Armazena as informações digitadas pelo o usuário ao tentar logar
+  TextEditingController _emailTxt = TextEditingController();
+  TextEditingController _senhaTxt = TextEditingController();
+  //Controlador da View
+  LoginController controlador = LoginController();
 
   @override
   Widget build(BuildContext context) {
@@ -34,194 +35,159 @@ class Login extends StatelessWidget {
           left: 40,
           right: 40,
         ),
-        child: Form(
-          child: ListView(
-            children: <Widget>[
-              SizedBox(
-                height: 20,
-              ),
+        child: ListView(
+          children: <Widget>[
+            SizedBox(
+              height: 20,
+            ),
 
-              //Form de Email
-              TextFormField(
-                controller: this.emailTxt,
-                keyboardType: TextInputType.emailAddress,
-                style: TextStyle(
+            //Form de Email
+            TextFormField(
+              controller: this._emailTxt,
+              keyboardType: TextInputType.emailAddress,
+              style: TextStyle(
+                fontSize: 20,
+              ),
+              decoration: InputDecoration(
+                labelText: "E-mail",
+                labelStyle: TextStyle(
+                  color: Colors.black38,
+                  fontWeight: FontWeight.w400,
                   fontSize: 20,
+                  fontFamily: 'KGred',
                 ),
-                decoration: InputDecoration(
-                  labelText: "E-mail",
-                  labelStyle: TextStyle(
-                    color: Colors.black38,
-                    fontWeight: FontWeight.w400,
-                    fontSize: 20,
+              ),
+            ),
+
+            //sizebox para dar espaço
+            SizedBox(
+              height: 10,
+            ),
+
+            //Form de Senha
+            TextFormField(
+              controller: this._senhaTxt,
+              keyboardType: TextInputType.text,
+              obscureText: true,
+              style: TextStyle(fontSize: 20),
+              decoration: InputDecoration(
+                labelText: "Senha",
+                labelStyle: TextStyle(
+                  color: Colors.black38,
+                  fontWeight: FontWeight.w400,
+                  fontSize: 20,
+                  fontFamily: 'KGred',
+                ),
+              ),
+            ),
+
+            //botao Recuperar senha
+            Container(
+              height: 50,
+              alignment: Alignment.centerRight,
+              child: FlatButton(
+                child: Text(
+                  "Esqueceu a senha?",
+                  textAlign: TextAlign.right,
+                  style: TextStyle(
+                    color: Colors.orangeAccent,
                     fontFamily: 'KGred',
                   ),
                 ),
+                //
+                //ação do botao
+                onPressed: () => {
+                  Navigator.pushNamed(context, '/recuperarsenha'),
+                },
               ),
+            ),
 
-              //sizebox para dar espaço
-              SizedBox(
-                height: 10,
-              ),
+            //sizedbox pra dar espaço
+            SizedBox(
+              height: 30,
+            ),
 
-              //Form de Senha
-              TextFormField(
-                controller: this.senhaTxt,
-                keyboardType: TextInputType.text,
-                obscureText: true,
-                style: TextStyle(fontSize: 20),
-                decoration: InputDecoration(
-                  labelText: "Senha",
-                  labelStyle: TextStyle(
-                    color: Colors.black38,
-                    fontWeight: FontWeight.w400,
-                    fontSize: 20,
-                    fontFamily: 'KGred',
-                  ),
-                ),
-              ),
-
-              //botao Recuperar senha
-              Container(
-                height: 50,
-                alignment: Alignment.centerRight,
-                child: TextButton(
-                  child: Text(
-                    "Esqueceu a senha?",
-                    textAlign: TextAlign.right,
-                    style: TextStyle(
-                      color: Colors.orangeAccent,
-                      fontFamily: 'KGred',
-                    ),
-                  ),
-                  //
-                  //ação do botao
-                  onPressed: () => {
-                    Navigator.pushNamed(context, '/recuperarsenha'),
-                  },
-                ),
-              ),
-
-              //sizedbox pra dar espaço
-              SizedBox(
-                height: 30,
-              ),
-
-              //botao Login
-              ButtonTheme(
-                child: ElevatedButton(
-                  style: ButtonStyle(
-                      backgroundColor:
-                          MaterialStateProperty.all<Color>(Color(0xff2be0b5)),
-                      minimumSize:
-                          MaterialStateProperty.all<Size>(Size(220, 50))),
-                  //ação do botao
-                  onPressed: () => {
-                    Navigator.pushNamedAndRemoveUntil(
-                    context, '/homescreen', (route) => false),
-                    //logar()
-                  },
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: <Widget>[
-                      Text(
-                        "Login",
-                        style: TextStyle(
-                          fontFamily: 'KGred',
-                          color: Colors.black,
-                          fontSize: 20,
-                        ),
-                        textAlign: TextAlign.left,
+            //botao Login
+            ButtonTheme(
+              height: 50.0,
+              child: RaisedButton(
+                color: Color(0xff2be0b5),
+                //
+                //ação do botao
+                onPressed: () => {
+                  //Navigator.pushNamedAndRemoveUntil(
+                  //context, '/homescreen', (route) => false),
+                  this.logar()
+                },
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: <Widget>[
+                    Text(
+                      "Login",
+                      style: TextStyle(
+                        fontFamily: 'KGred',
+                        color: Colors.black,
+                        fontSize: 20,
                       ),
-                      Container(
-                        child: SizedBox(
-                          child: Image.asset('assets/img/paw_icon.png'),
-                          height: 28,
-                          width: 28,
-                        ),
-                      )
-                    ],
-                  ),
-                ),
-              ),
-
-              //botao cadastre-se
-              Container(
-                height: 60,
-                margin: const EdgeInsets.only(top: 30),
-                alignment: Alignment.center,
-                child: TextButton(
-                  child: Text(
-                    "Para doar ou adotar\n" "Cadastre-se",
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                      color: Colors.black,
-                      fontFamily: 'KGred',
-                      fontSize: 16,
+                      textAlign: TextAlign.left,
                     ),
-                  ),
-                  //
-                  //ação ao aperta o botao cadastrar
-                  onPressed: () {
-                    //cadastrar();
-                    Navigator.pushNamed(context, "/cadastro");
-                  },
+                    Container(
+                      child: SizedBox(
+                        child: Image.asset('assets/img/paw_icon.png'),
+                        height: 28,
+                        width: 28,
+                      ),
+                    )
+                  ],
                 ),
               ),
-            ],
-          ),
+            ),
+
+            //botao cadastre-se
+            Container(
+              height: 60,
+              margin: const EdgeInsets.only(top: 30),
+              alignment: Alignment.center,
+              child: FlatButton(
+                child: Text(
+                  "Para doar ou adotar\n" "Cadastre-se",
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    color: Colors.black,
+                    fontFamily: 'KGred',
+                    fontSize: 16,
+                  ),
+                ),
+                //
+                //ação ao aperta o botao
+                onPressed: () => {
+                  Navigator.pushNamed(context, '/cadastro'),
+                },
+              ),
+            ),
+          ],
         ),
       ),
     );
   }
 
-  //Apenas para conhecimento
-
-  //Url do database firebase
-
-  // ignore: unused_element
-  void _conexao() {
-    http
-        .post(url,
-            body: json.encode(
-                {"email": this.emailTxt.text, "senha": this.senhaTxt.text}))
-        .then((value) => {
-              //Caso dê certo execulta aqui
-              //Value contêm a resposta do servidor
-              print("Envie o email: " + this.emailTxt.text)
-            });
-  }
-
-  List<String> usuarios = <String>[];
-  //Apenas para conhecimento
-  // ignore: unused_element
-  Future<void> _getUsers() {
-    return http.get(url).then((response) {
-      //response.body retorna a query em Json
-      //O map armazana em formato de Lista
-      Map<String, dynamic> map = json.decode(response.body);
-      usuarios = [];
-      //For no map
-      map.forEach((key, value) {
-        //Key é a chave do user
-        usuarios.add(map[key]["email"]);
-        usuarios.add(map[key]["senha"]);
-        usuarios.add("--------");
-      });
-      //Varrendo toda lisa
-      usuarios.forEach((element) {
-        print(element);
-      });
-      print(response.body);
-    });
-  }
-
-  //Aqui na vera
-  void cadastrar() {
-    controllerView.signUp(emailTxt.text, senhaTxt.text);
-  }
-
+  //Ação do botão logar
   void logar() {
-    controllerView.logar(emailTxt.text, senhaTxt.text);
+    bool auth = false;
+    //Vai retorna se o usuário está na base
+    auth =
+        this.controlador.validarUser(this._emailTxt.text, this._senhaTxt.text);
+
+    //TEMP
+    if (this._emailTxt.text == "fernandes" && this._senhaTxt.text == "123") {
+      Navigator.pushNamedAndRemoveUntil(
+          context, '/homescreen', (route) => false);
+      print("login aceito");
+    } else {
+      setState(() {
+        final snackBar = SnackBar(content: Text('Usuário ou Senha inválido'));
+        ScaffoldMessenger.of(context).showSnackBar(snackBar);
+      });
+    }
   }
 }

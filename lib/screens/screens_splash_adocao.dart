@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:pet_adote/screens/loading.dart';
 
-class SplashAdocao extends StatefulWidget {
+class Splash_adocao extends StatefulWidget {
   @override
-  _SplashAdocaoState createState() => _SplashAdocaoState();
+  _Splash_adocaoState createState() => _Splash_adocaoState();
 }
 
-class _SplashAdocaoState extends State<SplashAdocao> {
+class _Splash_adocaoState extends State<Splash_adocao> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(

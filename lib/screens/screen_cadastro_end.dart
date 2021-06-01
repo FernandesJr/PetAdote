@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 
-class CadastroEnd extends StatefulWidget {
+class Cadastro_end extends StatefulWidget {
   @override
-  _CadastroEndState createState() => _CadastroEndState();
+  _Cadastro_endState createState() => _Cadastro_endState();
 }
 
-class _CadastroEndState extends State<CadastroEnd> {
+class _Cadastro_endState extends State<Cadastro_end> {
 //variavel do checkbox para verificação
   bool _sel = false;
 
@@ -148,15 +148,11 @@ class _CadastroEndState extends State<CadastroEnd> {
                 children: <Widget>[
                   ButtonTheme(
                     height: 60,
-                    child: ElevatedButton(
-                      style: ButtonStyle(
-                        backgroundColor: MaterialStateProperty.all<Color>(
-                          Color.fromRGBO(211, 211, 211, 1)
-                        ),
-                      ),
+                    child: RaisedButton(
                       onPressed: () => {
                         Navigator.pushNamed(context, '/termouso'),
                       },
+                      color: Color.fromRGBO(211, 211, 211, 1),
                       child: Text(
                         "Aceito Todos os termos\n" "uso deste aplicativo",
                         style: TextStyle(

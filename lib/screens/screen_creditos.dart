@@ -216,7 +216,7 @@ class _CreditosState extends State<Creditos> {
               //obs
               Center(
                 child: Text(
-                  "*Projeto de conclusão de curso da turma de Análise e Desenvolvimento de sistemas 2021.2\n\n",
+                  "*Projeto de conclusão de curso da turma de Análise e Desenvolvimento de sistemas do 5° périodo\n\n",
                   style: TextStyle(
                     fontFamily: 'KGred',
                     fontSize: 12,

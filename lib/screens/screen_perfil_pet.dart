@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'screen_anuncios.dart';
 
-class PerfilPet extends StatefulWidget {
+class Perfil_Pet extends StatefulWidget {
   @override
-  _PerfilPetState createState() => _PerfilPetState();
+  _Perfil_PetState createState() => _Perfil_PetState();
 }
 
-class _PerfilPetState extends State<PerfilPet> {
+class _Perfil_PetState extends State<Perfil_Pet> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(

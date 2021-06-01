@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:pet_adote/screens/screen_anuncios.dart';
 
-class ScreenFiltros extends StatefulWidget {
+class Screen_Filtros extends StatefulWidget {
   @override
-  _ScreenFiltrosState createState() => _ScreenFiltrosState();
+  _Screen_FiltrosState createState() => _Screen_FiltrosState();
 }
 
-class _ScreenFiltrosState extends State<ScreenFiltros> {
+class _Screen_FiltrosState extends State<Screen_Filtros> {
   String dropdownValue = 'One';
   @override
   Widget build(BuildContext context) {

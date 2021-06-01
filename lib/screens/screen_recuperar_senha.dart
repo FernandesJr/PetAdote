@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 
-class RecuperarSenha extends StatefulWidget {
+class Recuperar_senha extends StatefulWidget {
   @override
-  _RecuperarSenhaState createState() => _RecuperarSenhaState();
+  _Recuperar_senhaState createState() => _Recuperar_senhaState();
 }
 
-class _RecuperarSenhaState extends State<RecuperarSenha> {
+class _Recuperar_senhaState extends State<Recuperar_senha> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(

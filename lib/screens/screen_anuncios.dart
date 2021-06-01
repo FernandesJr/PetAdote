@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:pet_adote/screens/screen_animal_list.dart';
 import 'package:pet_adote/screens/screen_drawer.dart';
+import 'package:pet_adote/screens/screen_animal_list.dart';
 
 class HomeScreen extends StatefulWidget {
   @override
@@ -23,7 +23,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
         ///botao de filtros
         actions: <Widget>[
-          TextButton.icon(
+          FlatButton.icon(
             //ação do botao filtros
             onPressed: () {
               Navigator.pushNamed(context, '/filtros');
@@ -49,7 +49,7 @@ class _HomeScreenState extends State<HomeScreen> {
       drawer: CustomDrawer(),
 
       //Tela de Anúncios dos Pets
-      body: AnimalList(),
+      body: Animal_List(),
     );
   }
 }

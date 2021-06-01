@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 
-class AtualizarCadastro extends StatefulWidget {
+class Atualizar_cadastro extends StatefulWidget {
   @override
-  _AtualizarCadastroState createState() => _AtualizarCadastroState();
+  _Atualizar_cadastroState createState() => _Atualizar_cadastroState();
 }
 
-class _AtualizarCadastroState extends State<AtualizarCadastro> {
+class _Atualizar_cadastroState extends State<Atualizar_cadastro> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(

@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 
-class AnimalList extends StatefulWidget {
+class Animal_List extends StatefulWidget {
   @override
-  _AnimalListState createState() => _AnimalListState();
+  _Animal_ListState createState() => _Animal_ListState();
 }
 
-class _AnimalListState extends State<AnimalList> {
+class _Animal_ListState extends State<Animal_List> {
   @override
   Widget build(BuildContext context) {
     return InkWell(

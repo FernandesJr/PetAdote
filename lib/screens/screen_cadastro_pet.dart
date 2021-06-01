@@ -169,11 +169,10 @@ class _CadastropetState extends State<Cadastropet> {
               Divider(),
 
               //Botao Cadastrar
-              //Color(0xff2be0b5)
               ButtonTheme(
                 height: 50.0,
-                child: ElevatedButton(
-                  style: ButtonStyle(backgroundColor: MaterialStateProperty.all<Color>(Color(0xff2be0b5))),
+                child: RaisedButton(
+                  color: Color(0xff2be0b5),
                   //Ação do botão
                   onPressed: () => {
                     Navigator.pushNamedAndRemoveUntil(

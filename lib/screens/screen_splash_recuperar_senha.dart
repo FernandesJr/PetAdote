@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:pet_adote/screens/loading.dart';
 
-class SplashRecuperaSenha extends StatefulWidget {
+class Splash_recupera_senha extends StatefulWidget {
   @override
-  _SplashRecuperaSenhaState createState() => _SplashRecuperaSenhaState();
+  _Splash_recupera_senhaState createState() => _Splash_recupera_senhaState();
 }
 
-class _SplashRecuperaSenhaState extends State<SplashRecuperaSenha> {
+class _Splash_recupera_senhaState extends State<Splash_recupera_senha> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -27,7 +27,7 @@ class _SplashRecuperaSenhaState extends State<SplashRecuperaSenha> {
                   width: 250,
                   decoration: BoxDecoration(
                     image: DecorationImage(
-                      image: AssetImage("assets/img/RecuperarSenha.png"),
+                      image: AssetImage("assets/img/recuperar_senha.png"),
                       fit: BoxFit.contain,
                     ),
                   ),

@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 
-class TermoUso extends StatefulWidget {
+class Termo_uso extends StatefulWidget {
   @override
-  _TermoUsoState createState() => _TermoUsoState();
+  _Termo_usoState createState() => _Termo_usoState();
 }
 
-class _TermoUsoState extends State<TermoUso> {
+class _Termo_usoState extends State<Termo_uso> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(

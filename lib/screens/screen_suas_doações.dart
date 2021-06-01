@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 
-class ScreenDoacoes extends StatefulWidget {
+class Screen_Doacoes extends StatefulWidget {
   @override
-  _ScreenDoacoesState createState() => _ScreenDoacoesState();
+  _Screen_DoacoesState createState() => _Screen_DoacoesState();
 }
 
-class _ScreenDoacoesState extends State<ScreenDoacoes> {
+class _Screen_DoacoesState extends State<Screen_Doacoes> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -85,7 +85,7 @@ class _ScreenDoacoesState extends State<ScreenDoacoes> {
                       //Ação do botão
                       onPressed: () => {
                         Navigator.of(context).pushReplacement(MaterialPageRoute(
-                            builder: (context) => ScreenDoacoes())),
+                            builder: (context) => Screen_Doacoes())),
                       },
                       //Row para organizar o texto e o icon dentro do botão
                       child: Row(
