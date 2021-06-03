@@ -5,9 +5,8 @@ import 'package:pet_adote/screens/screen_animal_list.dart';
 
 class HomeScreen extends StatefulWidget {
   Usuario user;
-  String emailUser;
 
-  HomeScreen({this.emailUser});
+  HomeScreen({this.user});
 
   @override
   _HomeScreenState createState() => _HomeScreenState();
@@ -18,7 +17,7 @@ class _HomeScreenState extends State<HomeScreen> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    print("ESTOU NA SCREEN HOME USER: " + widget.emailUser);
+    print("ESTOU NA SCREEN HOME USER: " + widget.user.nome);
   }
 
   @override

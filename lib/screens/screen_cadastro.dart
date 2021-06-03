@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:pet_adote/controllers/cadastro_controller.dart';
+import 'package:pet_adote/models/usuario_model.dart';
+import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
+import 'package:pet_adote/screens/screen_cadastro_end.dart';
 
 class Cadastro extends StatefulWidget {
   @override
@@ -6,6 +10,22 @@ class Cadastro extends StatefulWidget {
 }
 
 class _CadastroState extends State<Cadastro> {
+  TextEditingController controllerNome = TextEditingController();
+  TextEditingController controllerCpf = TextEditingController();
+  TextEditingController controllerTel = TextEditingController();
+  TextEditingController controllerEmail = TextEditingController();
+  TextEditingController controllerSenha = TextEditingController();
+  TextEditingController controllerRepSenha = TextEditingController();
+  Usuario user = Usuario();
+  //Controller da View
+  CadastroController controlador = CadastroController();
+
+  //Mascaras
+  var maskTel = new MaskTextInputFormatter(
+      mask: '(##) #####-####', filter: {"#": RegExp(r'[0-9]')});
+  var maskCpf = new MaskTextInputFormatter(
+      mask: '###.###.###-##', filter: {"#": RegExp(r'[0-9]')});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -43,6 +63,7 @@ class _CadastroState extends State<Cadastro> {
 
               //Form de Nome completo
               TextFormField(
+                controller: controllerNome,
                 autofocus: false,
                 keyboardType: TextInputType.text,
                 style: new TextStyle(
@@ -60,6 +81,8 @@ class _CadastroState extends State<Cadastro> {
 
               //Form de CPF
               TextFormField(
+                inputFormatters: [maskCpf],
+                controller: controllerCpf,
                 autofocus: false,
                 keyboardType: TextInputType.number,
                 style: new TextStyle(
@@ -77,6 +100,8 @@ class _CadastroState extends State<Cadastro> {
 
               //Form de Numero
               TextFormField(
+                inputFormatters: [maskTel],
+                controller: controllerTel,
                 autofocus: false,
                 keyboardType: TextInputType.number,
                 style: new TextStyle(
@@ -94,6 +119,7 @@ class _CadastroState extends State<Cadastro> {
 
               //Form de E-mail
               TextFormField(
+                controller: controllerEmail,
                 autofocus: false,
                 keyboardType: TextInputType.text,
                 style: new TextStyle(
@@ -111,6 +137,7 @@ class _CadastroState extends State<Cadastro> {
 
               //Form de Senha
               TextFormField(
+                controller: controllerSenha,
                 autofocus: false,
                 obscureText: true,
                 keyboardType: TextInputType.text,
@@ -129,6 +156,7 @@ class _CadastroState extends State<Cadastro> {
 
               //Form de Repetir senha
               TextFormField(
+                controller: controllerRepSenha,
                 autofocus: false,
                 obscureText: true,
                 keyboardType: TextInputType.text,
@@ -154,7 +182,8 @@ class _CadastroState extends State<Cadastro> {
                   //
                   //ação ao apertar o botao
                   onPressed: () => {
-                    Navigator.pushNamed(context, '/cadastro2'),
+                    //Navigator.pushNamed(context, '/cadastro2'),
+                    this.criarUser()
                   },
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -184,5 +213,36 @@ class _CadastroState extends State<Cadastro> {
         ),
       ),
     );
+  }
+
+  void criarUser() {
+    this.user.nome = this.controllerNome.text;
+    this.user.cpf = this.controllerCpf.text;
+    this.user.tel = this.controllerTel.text;
+    this.user.email = this.controllerEmail.text;
+    this.user.senha = this.controllerSenha.text;
+    this.proximo();
+  }
+
+  //Iráverificar se todos os campos estão preenchido
+  //Conferir a senha digitada
+  void proximo() {
+    String res = this
+        .controlador
+        .verificarCampos(this.user, this.controllerRepSenha.text);
+    if (res == "Email válido") {
+      //Manda para continuação do cadastro
+      Navigator.pushReplacement<void, void>(
+          context,
+          MaterialPageRoute<void>(
+            builder: (BuildContext context) => Cadastro_end(user: this.user),
+          ));
+    } else {
+      setState(() {
+        final snackBar =
+            SnackBar(content: Text(res), backgroundColor: Colors.red.shade200);
+        ScaffoldMessenger.of(context).showSnackBar(snackBar);
+      });
+    }
   }
 }

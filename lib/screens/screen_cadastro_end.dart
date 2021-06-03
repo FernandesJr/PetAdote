@@ -1,13 +1,42 @@
 import 'package:flutter/material.dart';
+import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
+import 'package:pet_adote/controllers/cadastro_end_controller.dart';
+import 'package:pet_adote/models/usuario_model.dart';
+import 'package:pet_adote/screens/screen_anuncios.dart';
 
 class Cadastro_end extends StatefulWidget {
+  Usuario user;
+  Cadastro_end({this.user});
   @override
   _Cadastro_endState createState() => _Cadastro_endState();
 }
 
 class _Cadastro_endState extends State<Cadastro_end> {
-//variavel do checkbox para verificação
+  Usuario usuario;
+  CadastroEndController controlador = CadastroEndController();
+  @override
+  void initState() {
+    super.initState();
+    //Usuário que vem da primeira tela de cadastro
+    this.usuario = widget.user;
+    print('Recebi na continuação do cadastro o usuário: ' + usuario.nome);
+  }
+
+  //variavel do checkbox para verificação
   bool _sel = false;
+  //TextFilds
+  TextEditingController controllerEstado = TextEditingController();
+  TextEditingController controllerCidade = TextEditingController();
+  TextEditingController controllerBairro = TextEditingController();
+  TextEditingController controllerRua = TextEditingController();
+  TextEditingController controllerNum = TextEditingController();
+  TextEditingController controllerCep = TextEditingController();
+
+  //Mascaras
+  var maskNum =
+      new MaskTextInputFormatter(mask: '####', filter: {"#": RegExp(r'[0-9]')});
+  var maskCep = new MaskTextInputFormatter(
+      mask: '#####-###', filter: {"#": RegExp(r'[0-9]')});
 
   @override
   Widget build(BuildContext context) {
@@ -41,6 +70,7 @@ class _Cadastro_endState extends State<Cadastro_end> {
               //
               //Form de Estado
               TextFormField(
+                controller: controllerEstado,
                 autofocus: false,
                 keyboardType: TextInputType.text,
                 style: new TextStyle(
@@ -58,6 +88,7 @@ class _Cadastro_endState extends State<Cadastro_end> {
 
               //Form de Cidade
               TextFormField(
+                controller: controllerCidade,
                 autofocus: false,
                 keyboardType: TextInputType.text,
                 style: new TextStyle(
@@ -75,6 +106,7 @@ class _Cadastro_endState extends State<Cadastro_end> {
 
               //Form de Bairro
               TextFormField(
+                controller: controllerBairro,
                 autofocus: false,
                 keyboardType: TextInputType.text,
                 style: new TextStyle(
@@ -92,6 +124,7 @@ class _Cadastro_endState extends State<Cadastro_end> {
 
               //Form de Rua
               TextFormField(
+                controller: controllerRua,
                 autofocus: false,
                 keyboardType: TextInputType.text,
                 style: new TextStyle(
@@ -109,6 +142,8 @@ class _Cadastro_endState extends State<Cadastro_end> {
 
               //Form de Número da casa
               TextFormField(
+                inputFormatters: [maskNum],
+                controller: controllerNum,
                 autofocus: false,
                 keyboardType: TextInputType.number,
                 style: new TextStyle(
@@ -126,6 +161,8 @@ class _Cadastro_endState extends State<Cadastro_end> {
 
               //Form de CEP
               TextFormField(
+                inputFormatters: [maskCep],
+                controller: controllerCep,
                 autofocus: false,
                 keyboardType: TextInputType.number,
                 style: new TextStyle(
@@ -185,7 +222,8 @@ class _Cadastro_endState extends State<Cadastro_end> {
                   color: Color(0xff2be0b5),
                   //ação do botao cadastrar
                   onPressed: () => {
-                    Navigator.pushReplacementNamed(context, '/splashcadastro'),
+                    //Navigator.pushReplacementNamed(context, '/splashcadastro'),
+                    cadastrar()
                   },
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -215,5 +253,35 @@ class _Cadastro_endState extends State<Cadastro_end> {
         ),
       ),
     );
+  }
+
+  void cadastrar() {
+    this.usuario.estado = this.controllerEstado.text;
+    this.usuario.cidade = this.controllerCidade.text;
+    this.usuario.bairro = this.controllerBairro.text;
+    this.usuario.rua = this.controllerRua.text;
+    this.usuario.numero = this.controllerNum.text;
+    this.usuario.cep = this.controllerCep.text;
+
+    //Pricisa converter o retorn em String
+    String res = this.controlador.verificarCampos(this.usuario).toString();
+
+    if (res == "Confirmado" && this._sel) {
+      //Cadastra no banco e manda para tela principal
+      Navigator.pushReplacement<void, void>(
+          context,
+          MaterialPageRoute<void>(
+            builder: (BuildContext context) => HomeScreen(user: this.usuario),
+          ));
+    } else {
+      if (!_sel) {
+        res = "Aceite o termo de uso para continuar.";
+      }
+      setState(() {
+        final snackBar =
+            SnackBar(content: Text(res), backgroundColor: Colors.red.shade200);
+        ScaffoldMessenger.of(context).showSnackBar(snackBar);
+      });
+    }
   }
 }

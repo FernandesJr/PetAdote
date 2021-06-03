@@ -181,9 +181,6 @@ class _LoginState extends State<Login> {
 
     //TEMP
     if (auth) {
-      //Navigator.pushNamedAndRemoveUntil(
-      // context, '/homescreen', (route) => false);
-      //Navigator.pushReplacement(builder: (context) => HomeScreen());
       _completeLogin();
       print("login aceito");
     } else {
@@ -201,7 +198,7 @@ class _LoginState extends State<Login> {
     Navigator.pushReplacement<void, void>(
       context,
       MaterialPageRoute<void>(
-        builder: (BuildContext context) => HomeScreen(emailUser: emailUser),
+        builder: (BuildContext context) => HomeScreen(),
       ),
     );
   }
