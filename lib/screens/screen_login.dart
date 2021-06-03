@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:pet_adote/controllers/login_controller.dart';
+import 'package:pet_adote/screens/screen_anuncios.dart';
 
 class Login extends StatefulWidget {
   @override
@@ -174,20 +175,34 @@ class _LoginState extends State<Login> {
   //Ação do botão logar
   void logar() {
     bool auth = false;
-    //Vai retorna se o usuário está na base
+    //Vai retorna true caso o usuário esteja na base
     auth =
         this.controlador.validarUser(this._emailTxt.text, this._senhaTxt.text);
 
     //TEMP
-    if (this._emailTxt.text == "fernandes" && this._senhaTxt.text == "123") {
-      Navigator.pushNamedAndRemoveUntil(
-          context, '/homescreen', (route) => false);
+    if (auth) {
+      //Navigator.pushNamedAndRemoveUntil(
+      // context, '/homescreen', (route) => false);
+      //Navigator.pushReplacement(builder: (context) => HomeScreen());
+      _completeLogin();
       print("login aceito");
     } else {
       setState(() {
-        final snackBar = SnackBar(content: Text('Usuário ou Senha inválido'));
+        final snackBar = SnackBar(
+            content: Text('Usuário ou Senha inválido'),
+            backgroundColor: Colors.red.shade200);
         ScaffoldMessenger.of(context).showSnackBar(snackBar);
       });
     }
+  }
+
+  void _completeLogin() {
+    String emailUser = this._emailTxt.text;
+    Navigator.pushReplacement<void, void>(
+      context,
+      MaterialPageRoute<void>(
+        builder: (BuildContext context) => HomeScreen(emailUser: emailUser),
+      ),
+    );
   }
 }
