@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:pet_adote/models/usuario_model.dart';
 import 'package:pet_adote/screens/loading.dart';
+import 'package:pet_adote/screens/screen_anuncios.dart';
 
 class Splash_Cadastro extends StatefulWidget {
+  Usuario user;
+  Splash_Cadastro({this.user});
   @override
   _Splash_CadastroState createState() => _Splash_CadastroState();
 }
@@ -35,6 +39,7 @@ class _Splash_CadastroState extends State<Splash_Cadastro> {
               Center(
                 child: Text(
                   "PARABÉNS!\n"
+                  "${widget.user.nome.toUpperCase()}\n"
                   "agora você faz parte\n"
                   "da família Pet adote.",
                   style: TextStyle(
@@ -61,7 +66,11 @@ class _Splash_CadastroState extends State<Splash_Cadastro> {
     super.initState();
 
     Future.delayed(Duration(seconds: 3)).then((_) {
-      Navigator.pushNamedAndRemoveUntil(context, '/login', (route) => false);
+      Navigator.pushReplacement<void, void>(
+          context,
+          MaterialPageRoute<void>(
+              builder: (BuildContext context) =>
+                  HomeScreen(user: widget.user)));
     });
   }
 }

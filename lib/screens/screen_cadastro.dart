@@ -1,8 +1,11 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:pet_adote/controllers/cadastro_controller.dart';
 import 'package:pet_adote/models/usuario_model.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 import 'package:pet_adote/screens/screen_cadastro_end.dart';
+import 'package:http/http.dart' as http;
 
 class Cadastro extends StatefulWidget {
   @override
@@ -221,7 +224,8 @@ class _CadastroState extends State<Cadastro> {
     this.user.tel = this.controllerTel.text;
     this.user.email = this.controllerEmail.text;
     this.user.senha = this.controllerSenha.text;
-    this.proximo();
+    print(this.user.toJson());
+    this.validar();
   }
 
   //Iráverificar se todos os campos estão preenchido
@@ -243,6 +247,62 @@ class _CadastroState extends State<Cadastro> {
             SnackBar(content: Text(res), backgroundColor: Colors.red.shade200);
         ScaffoldMessenger.of(context).showSnackBar(snackBar);
       });
+    }
+  }
+
+  Future<void> validar() async {
+    if (user.nome.isEmpty ||
+        user.cpf.isEmpty ||
+        user.tel.isEmpty ||
+        user.email.isEmpty ||
+        user.senha.isEmpty) {
+      setState(() {
+        final snackBar = SnackBar(
+            content: Text("Preencha todos os campo, por favor!"),
+            backgroundColor: Colors.red.shade200);
+        ScaffoldMessenger.of(context).showSnackBar(snackBar);
+      });
+    } else if (this.user.senha != this.controllerRepSenha.text) {
+      setState(() {
+        final snackBar = SnackBar(
+            content: Text("Confirmação de SENHA inválida"),
+            backgroundColor: Colors.red.shade200);
+        ScaffoldMessenger.of(context).showSnackBar(snackBar);
+      });
+    } else if (!this.user.email.contains('@')) {
+      setState(() {
+        final snackBar = SnackBar(
+            content: Text("Email inválido, por favor verifique."),
+            backgroundColor: Colors.red.shade200);
+        ScaffoldMessenger.of(context).showSnackBar(snackBar);
+      });
+    } else {
+      var url = Uri.parse(
+          'https://api-petadote0.000webhostapp.com/Retorno/usuarioCadastroEmail.php');
+      //toJson converte um Usuario para Json
+      //var json = '{"email": ${this.user.email}}';
+      //print(json);
+      //map
+      //Map<String, dynamic> data = new Map<String, dynamic>();
+      //data['email'] = this.user.email;
+
+      //PAREI AQUI BUG NO JSON
+      var res = await http.post(url, body: this.user.toJsonEmail());
+      print(res.body);
+      if (jsonDecode(res.body) == "EmailNaoEncontrado") {
+        Navigator.pushReplacement<void, void>(
+            context,
+            MaterialPageRoute<void>(
+              builder: (BuildContext context) => Cadastro_end(user: this.user),
+            ));
+      } else {
+        setState(() {
+          final snackBar = SnackBar(
+              content: Text("Email já cadastrado, faça login."),
+              backgroundColor: Colors.red.shade200);
+          ScaffoldMessenger.of(context).showSnackBar(snackBar);
+        });
+      }
     }
   }
 }

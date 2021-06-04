@@ -3,6 +3,9 @@
    <application
         android:label="pet_adote"
         android:icon="@mipmap/ic_launcher">
+        <!--Adicionei essas permisões para tentar desbugar o XMLHttpRequest-->
+        <uses-permission android:name="android.permission.INTERNET" />
+        <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
         <activity
             android:name=".MainActivity"
             android:launchMode="singleTop"

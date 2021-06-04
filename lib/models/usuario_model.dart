@@ -11,6 +11,7 @@ class Usuario {
   String rua;
   String numero;
   String cep;
+  String imagem;
 
   Usuario(
       {this.id,
@@ -24,11 +25,11 @@ class Usuario {
       this.bairro,
       this.rua,
       this.numero,
-      this.cep});
+      this.cep,
+      this.imagem});
 
   //RECEBE um Json e transforma em USUÁRIO
   Usuario.fromJson(Map<String, dynamic> json) {
-    id = json['id'];
     nome = json['nome'];
     cpf = json['cpf'];
     tel = json['tel'];
@@ -40,15 +41,15 @@ class Usuario {
     rua = json['rua'];
     numero = json['numero'];
     cep = json['cep'];
+    imagem = json['imagem'];
   }
 
   //Transforma o usuário em um Json
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
     data['nome'] = this.nome;
     data['cpf'] = this.cpf;
-    data['tel'] = this.tel;
+    data['celular'] = this.tel;
     data['email'] = this.email;
     data['senha'] = this.senha;
     data['estado'] = this.estado;
@@ -57,6 +58,13 @@ class Usuario {
     data['rua'] = this.rua;
     data['numero'] = this.numero;
     data['cep'] = this.cep;
+    data['imagem'] = this.imagem;
+    return data;
+  }
+
+  Map<String, dynamic> toJsonEmail() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['email'] = this.email;
     return data;
   }
 }

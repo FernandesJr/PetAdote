@@ -1,8 +1,11 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 import 'package:pet_adote/controllers/cadastro_end_controller.dart';
 import 'package:pet_adote/models/usuario_model.dart';
-import 'package:pet_adote/screens/screen_anuncios.dart';
+import 'package:http/http.dart' as http;
+import 'package:pet_adote/screens/screen_splash_fin_cadastro.dart';
 
 class Cadastro_end extends StatefulWidget {
   Usuario user;
@@ -223,7 +226,8 @@ class _Cadastro_endState extends State<Cadastro_end> {
                   //ação do botao cadastrar
                   onPressed: () => {
                     //Navigator.pushReplacementNamed(context, '/splashcadastro'),
-                    cadastrar()
+                    //cadastrar()
+                    verificarCampos()
                   },
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -254,7 +258,8 @@ class _Cadastro_endState extends State<Cadastro_end> {
       ),
     );
   }
-
+  /*
+  //Desabilitando até entender bem o async e await
   void cadastrar() {
     this.usuario.estado = this.controllerEstado.text;
     this.usuario.cidade = this.controllerCidade.text;
@@ -263,25 +268,70 @@ class _Cadastro_endState extends State<Cadastro_end> {
     this.usuario.numero = this.controllerNum.text;
     this.usuario.cep = this.controllerCep.text;
 
-    //Pricisa converter o retorn em String
-    String res = this.controlador.verificarCampos(this.usuario).toString();
+    String res;
+    res = this.controlador.validar(this.usuario, this._sel);
 
-    if (res == "Confirmado" && this._sel) {
-      //Cadastra no banco e manda para tela principal
+    if (res == "Confirmado") {
+      //Passa para tela principal
       Navigator.pushReplacement<void, void>(
           context,
           MaterialPageRoute<void>(
             builder: (BuildContext context) => HomeScreen(user: this.usuario),
           ));
     } else {
-      if (!_sel) {
-        res = "Aceite o termo de uso para continuar.";
-      }
+      //String res = "processando...";
       setState(() {
         final snackBar =
             SnackBar(content: Text(res), backgroundColor: Colors.red.shade200);
         ScaffoldMessenger.of(context).showSnackBar(snackBar);
       });
+    }
+  }*/
+  void verificarCampos() async {
+    this.usuario.estado = this.controllerEstado.text;
+    this.usuario.cidade = this.controllerCidade.text;
+    this.usuario.bairro = this.controllerBairro.text;
+    this.usuario.rua = this.controllerRua.text;
+    this.usuario.numero = this.controllerNum.text;
+    this.usuario.cep = this.controllerCep.text;
+    if (this.usuario.estado.isEmpty ||
+        this.usuario.cidade.isEmpty ||
+        this.usuario.bairro.isEmpty ||
+        this.usuario.rua.isEmpty ||
+        this.usuario.numero.isEmpty ||
+        this.usuario.cep.isEmpty) {
+      setState(() {
+        final snackBar = SnackBar(
+            content: Text("Preencha todos os campos, por favor"),
+            backgroundColor: Colors.red.shade200);
+        ScaffoldMessenger.of(context).showSnackBar(snackBar);
+      });
+    } else if (!_sel) {
+      //Verifica se o usuário aceitou os termos de uso.
+      //this.msg = "Aceite o termo de uso para continuar.";
+      setState(() {
+        final snackBar = SnackBar(
+            content: Text("Aceite o termo de uso para continuar."),
+            backgroundColor: Colors.red.shade200);
+        ScaffoldMessenger.of(context).showSnackBar(snackBar);
+      });
+    } else {
+      //Cadastrar User no DB
+      this.usuario.imagem = "img.png";
+      var url = Uri.parse(
+          'https://api-petadote0.000webhostapp.com/Retorno/usuariosCadastro.php');
+      //toJson converte um Usuario para Json
+      var res = await http.post(url, body: this.usuario.toJson());
+      print("Envie para o bd");
+      print(res.body);
+      if (jsonDecode(res.body) == "Cadastro realizado com sucesso") {
+        //Gravou no DB enviando para 
+        Navigator.pushReplacement<void, void>(
+            context,
+            MaterialPageRoute<void>(
+                builder: (BuildContext context) =>
+                    Splash_Cadastro(user: this.usuario)));
+      }
     }
   }
 }
