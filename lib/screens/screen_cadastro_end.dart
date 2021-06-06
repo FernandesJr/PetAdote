@@ -2,7 +2,6 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
-import 'package:pet_adote/controllers/cadastro_end_controller.dart';
 import 'package:pet_adote/models/usuario_model.dart';
 import 'package:http/http.dart' as http;
 import 'package:pet_adote/screens/screen_splash_fin_cadastro.dart';
@@ -16,7 +15,6 @@ class Cadastro_end extends StatefulWidget {
 
 class _Cadastro_endState extends State<Cadastro_end> {
   Usuario usuario;
-  CadastroEndController controlador = CadastroEndController();
   @override
   void initState() {
     super.initState();
@@ -224,11 +222,7 @@ class _Cadastro_endState extends State<Cadastro_end> {
                 child: RaisedButton(
                   color: Color(0xff2be0b5),
                   //ação do botao cadastrar
-                  onPressed: () => {
-                    //Navigator.pushReplacementNamed(context, '/splashcadastro'),
-                    //cadastrar()
-                    verificarCampos()
-                  },
+                  onPressed: () => {verificarCampos()},
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: <Widget>[
@@ -308,7 +302,8 @@ class _Cadastro_endState extends State<Cadastro_end> {
       } else {
         setState(() {
           final snackBar = SnackBar(
-              content: Text("Estamos com algum problema de conexão, me desculpe."),
+              content:
+                  Text("Estamos com algum problema de conexão, me desculpe."),
               backgroundColor: Colors.red.shade200);
           ScaffoldMessenger.of(context).showSnackBar(snackBar);
         });

@@ -1,7 +1,6 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:pet_adote/controllers/cadastro_controller.dart';
 import 'package:pet_adote/models/usuario_model.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 import 'package:pet_adote/screens/screen_cadastro_end.dart';
@@ -21,8 +20,6 @@ class _CadastroState extends State<Cadastro> {
   TextEditingController controllerRepSenha = TextEditingController();
   //Usuario que irá ser direcionado para a tela HomeScreen
   Usuario user = Usuario();
-  String nome = "junior";
-  
 
   //Mascaras
   var maskTel = new MaskTextInputFormatter(
@@ -229,7 +226,6 @@ class _CadastroState extends State<Cadastro> {
     this.validar();
   }
 
-
   Future<void> validar() async {
     if (user.nome.isEmpty ||
         user.cpf.isEmpty ||
@@ -257,18 +253,10 @@ class _CadastroState extends State<Cadastro> {
         ScaffoldMessenger.of(context).showSnackBar(snackBar);
       });
     } else {
+      //Url da API
       var url = Uri.parse(
           'https://api-petadote0.000webhostapp.com/Retorno/usuarioCadastroEmail.php');
-      //toJson converte um Usuario para Json
-      //var json = '{"email": ${this.user.email}}';
-      //print(json);
-      //map
-      //Map<String, dynamic> data = new Map<String, dynamic>();
-      //data['email'] = this.user.email;
-
-      //PAREI AQUI BUG NO JSON
-      //String email = this.user.email;
-      //var j = {"email": email};
+      //Método post, válidar se o email já está sendo utiliado por outro usuário
       var res = await http.post(url, body: {"email": this.user.email});
       print(res.body + 'resposta da consulta---------');
       if (jsonDecode(res.body) == "EmailNaoEncontrado") {
