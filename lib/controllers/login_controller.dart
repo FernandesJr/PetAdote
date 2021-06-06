@@ -7,7 +7,7 @@ class LoginController{
     Map<String, dynamic> map;
     // map = (Aqui vem do db)
     //TEMP
-    if (email == "fernandes@email.com" && senha == "123" || email == "fern" && senha == "123" ) {
+    if (email == "CESAR@email.com" && senha == "123" || email == "fern" && senha == "123" ) {
       return true;
     } else {
       return false;

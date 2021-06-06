@@ -17,7 +17,7 @@ class _HomeScreenState extends State<HomeScreen> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    print("ESTOU NA SCREEN HOME USER: " + widget.user.nome);
+    print("ESTOU NA SCREEN HOME EMAIL: " + widget.user.email);
   }
 
   @override

@@ -19,9 +19,10 @@ class _CadastroState extends State<Cadastro> {
   TextEditingController controllerEmail = TextEditingController();
   TextEditingController controllerSenha = TextEditingController();
   TextEditingController controllerRepSenha = TextEditingController();
+  //Usuario que irá ser direcionado para a tela HomeScreen
   Usuario user = Usuario();
-  //Controller da View
-  CadastroController controlador = CadastroController();
+  String nome = "junior";
+  
 
   //Mascaras
   var maskTel = new MaskTextInputFormatter(
@@ -228,27 +229,6 @@ class _CadastroState extends State<Cadastro> {
     this.validar();
   }
 
-  //Iráverificar se todos os campos estão preenchido
-  //Conferir a senha digitada
-  void proximo() {
-    String res = this
-        .controlador
-        .verificarCampos(this.user, this.controllerRepSenha.text);
-    if (res == "Email válido") {
-      //Manda para continuação do cadastro
-      Navigator.pushReplacement<void, void>(
-          context,
-          MaterialPageRoute<void>(
-            builder: (BuildContext context) => Cadastro_end(user: this.user),
-          ));
-    } else {
-      setState(() {
-        final snackBar =
-            SnackBar(content: Text(res), backgroundColor: Colors.red.shade200);
-        ScaffoldMessenger.of(context).showSnackBar(snackBar);
-      });
-    }
-  }
 
   Future<void> validar() async {
     if (user.nome.isEmpty ||
@@ -287,8 +267,10 @@ class _CadastroState extends State<Cadastro> {
       //data['email'] = this.user.email;
 
       //PAREI AQUI BUG NO JSON
-      var res = await http.post(url, body: this.user.toJsonEmail());
-      print(res.body);
+      //String email = this.user.email;
+      //var j = {"email": email};
+      var res = await http.post(url, body: {"email": this.user.email});
+      print(res.body + 'resposta da consulta---------');
       if (jsonDecode(res.body) == "EmailNaoEncontrado") {
         Navigator.pushReplacement<void, void>(
             context,

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:pet_adote/controllers/login_controller.dart';
+import 'package:pet_adote/models/usuario_model.dart';
 import 'package:pet_adote/screens/screen_anuncios.dart';
 
 class Login extends StatefulWidget {
@@ -195,10 +196,12 @@ class _LoginState extends State<Login> {
 
   void _completeLogin() {
     String emailUser = this._emailTxt.text;
+    Usuario user = Usuario();
+    user.email = emailUser;
     Navigator.pushReplacement<void, void>(
       context,
       MaterialPageRoute<void>(
-        builder: (BuildContext context) => HomeScreen(),
+        builder: (BuildContext context) => HomeScreen(user: user),
       ),
     );
   }

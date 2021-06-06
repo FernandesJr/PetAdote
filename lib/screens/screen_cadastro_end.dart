@@ -258,42 +258,16 @@ class _Cadastro_endState extends State<Cadastro_end> {
       ),
     );
   }
-  /*
-  //Desabilitando até entender bem o async e await
-  void cadastrar() {
-    this.usuario.estado = this.controllerEstado.text;
-    this.usuario.cidade = this.controllerCidade.text;
-    this.usuario.bairro = this.controllerBairro.text;
-    this.usuario.rua = this.controllerRua.text;
-    this.usuario.numero = this.controllerNum.text;
-    this.usuario.cep = this.controllerCep.text;
 
-    String res;
-    res = this.controlador.validar(this.usuario, this._sel);
-
-    if (res == "Confirmado") {
-      //Passa para tela principal
-      Navigator.pushReplacement<void, void>(
-          context,
-          MaterialPageRoute<void>(
-            builder: (BuildContext context) => HomeScreen(user: this.usuario),
-          ));
-    } else {
-      //String res = "processando...";
-      setState(() {
-        final snackBar =
-            SnackBar(content: Text(res), backgroundColor: Colors.red.shade200);
-        ScaffoldMessenger.of(context).showSnackBar(snackBar);
-      });
-    }
-  }*/
   void verificarCampos() async {
+    //Capturando os valores dos TextFields
     this.usuario.estado = this.controllerEstado.text;
     this.usuario.cidade = this.controllerCidade.text;
     this.usuario.bairro = this.controllerBairro.text;
     this.usuario.rua = this.controllerRua.text;
     this.usuario.numero = this.controllerNum.text;
     this.usuario.cep = this.controllerCep.text;
+    //Verificando se todos os campos estão preenchidos
     if (this.usuario.estado.isEmpty ||
         this.usuario.cidade.isEmpty ||
         this.usuario.bairro.isEmpty ||
@@ -308,7 +282,6 @@ class _Cadastro_endState extends State<Cadastro_end> {
       });
     } else if (!_sel) {
       //Verifica se o usuário aceitou os termos de uso.
-      //this.msg = "Aceite o termo de uso para continuar.";
       setState(() {
         final snackBar = SnackBar(
             content: Text("Aceite o termo de uso para continuar."),
@@ -317,7 +290,8 @@ class _Cadastro_endState extends State<Cadastro_end> {
       });
     } else {
       //Cadastrar User no DB
-      this.usuario.imagem = "img.png";
+      this.usuario.imagem =
+          "img.png"; //Para não ir null para o DB deixei esse nome como padrão
       var url = Uri.parse(
           'https://api-petadote0.000webhostapp.com/Retorno/usuariosCadastro.php');
       //toJson converte um Usuario para Json
@@ -325,12 +299,19 @@ class _Cadastro_endState extends State<Cadastro_end> {
       print("Envie para o bd");
       print(res.body);
       if (jsonDecode(res.body) == "Cadastro realizado com sucesso") {
-        //Gravou no DB enviando para 
+        //Gravou no DB enviando para
         Navigator.pushReplacement<void, void>(
             context,
             MaterialPageRoute<void>(
                 builder: (BuildContext context) =>
                     Splash_Cadastro(user: this.usuario)));
+      } else {
+        setState(() {
+          final snackBar = SnackBar(
+              content: Text("Estamos com algum problema de conexão, me desculpe."),
+              backgroundColor: Colors.red.shade200);
+          ScaffoldMessenger.of(context).showSnackBar(snackBar);
+        });
       }
     }
   }
