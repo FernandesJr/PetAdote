@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
-import 'screen_anuncios.dart';
+import 'package:pet_adote/models/animal_model.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class Perfil_Pet extends StatefulWidget {
+  Animal animal;
+  Perfil_Pet({this.animal});
   @override
   _Perfil_PetState createState() => _Perfil_PetState();
 }
@@ -67,7 +70,7 @@ class _Perfil_PetState extends State<Perfil_Pet> {
                         borderRadius: BorderRadius.circular(5),
                       ),
                       child: Text(
-                        "12345678901",
+                        widget.animal.nome,
                         style: TextStyle(
                             fontFamily: 'KGred',
                             fontSize: 25,
@@ -291,10 +294,7 @@ class _Perfil_PetState extends State<Perfil_Pet> {
                       color: Color(0xff2be0b5),
                       //ação do botao
                       //aqui tem que levar pro whatsapp, agr esta retornando para homescreen
-                      onPressed: () => {
-                        Navigator.of(context).pushReplacement(MaterialPageRoute(
-                            builder: (context) => HomeScreen())),
-                      },
+                      onPressed: () => {whats(number: "55" + "81992213546")},
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: <Widget>[
@@ -325,5 +325,18 @@ class _Perfil_PetState extends State<Perfil_Pet> {
         ],
       ),
     );
+  }
+
+  //Abre o Whats
+  void whats({@required number}) async {
+    String url = "https://api.whatsapp.com/send?phone=$number";
+
+    await canLaunch(url) ? launch(url) : Text("oi");
+  }
+
+  String teste(String n) {
+    String s = "(81)93333-3333'";
+    print(n.replaceAll(new RegExp(r'[()-]+'), ''));
+    return n.replaceAll(new RegExp(r'[()-]+'), '');
   }
 }

@@ -1,7 +1,10 @@
+import 'dart:convert';
+import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:pet_adote/controllers/login_controller.dart';
 import 'package:pet_adote/models/usuario_model.dart';
 import 'package:pet_adote/screens/screen_anuncios.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 class Login extends StatefulWidget {
   @override
@@ -174,16 +177,19 @@ class _LoginState extends State<Login> {
   }
 
   //Ação do botão logar
-  void logar() {
-    bool auth = false;
-    //Vai retorna true caso o usuário esteja na base
-    auth =
-        this.controlador.validarUser(this._emailTxt.text, this._senhaTxt.text);
+  void logar() async {
+    final url = Uri.parse(
+        'https://api-petadote0.000webhostapp.com/Retorno/usuariosLogin.php');
 
-    //TEMP
-    if (auth) {
+    final res = await http.post(url, body: {
+      "loginEmail": this._emailTxt.text,
+      "loginSenha": this._senhaTxt.text,
+    });
+
+    final data = jsonDecode(res.body);
+
+    if (data == "Sucesso") {
       _completeLogin();
-      print("login aceito");
     } else {
       setState(() {
         final snackBar = SnackBar(
@@ -194,10 +200,45 @@ class _LoginState extends State<Login> {
     }
   }
 
-  void _completeLogin() {
+  void _completeLogin() async {
     String emailUser = this._emailTxt.text;
     Usuario user = Usuario();
     user.email = emailUser;
+    //Buscar dados
+    final url = Uri.parse(
+        'https://api-petadote0.000webhostapp.com/Retorno/usuariosDados.php');
+
+    final res = await http.post(url, body: {
+      "email": emailUser,
+    });
+
+    final data = jsonDecode(res.body);
+
+    //Definir dados do user logado
+    user.bairro = data['bairro'];
+    user.cidade = data['cidade'];
+    user.cpf = data['cpf'];
+    user.estado = data['estado'];
+    user.id = data['id'];
+    user.nome = data['nome'];
+    user.numero = data['numero'];
+    user.rua = data['rua'];
+    user.senha = data['senha'];
+    user.tel = data['celular'];
+    //Estava faltando
+    user.imagem = data['imagem'];
+    user.cep = data['cep'];
+
+
+    Fluttertoast.showToast(
+        msg: user.cidade,
+        toastLength: Toast.LENGTH_SHORT,
+        gravity: ToastGravity.CENTER,
+        timeInSecForIosWeb: 2,
+        backgroundColor: Colors.red,
+        textColor: Colors.white,
+        fontSize: 20.0);
+
     Navigator.pushReplacement<void, void>(
       context,
       MaterialPageRoute<void>(
@@ -206,3 +247,5 @@ class _LoginState extends State<Login> {
     );
   }
 }
+
+void listAnuncios() async {}

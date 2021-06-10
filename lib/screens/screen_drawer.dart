@@ -1,6 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:pet_adote/models/usuario_model.dart';
+import 'package:pet_adote/screens/screen_atualizar_contato.dart';
+import 'package:pet_adote/screens/screen_cadastro_pet.dart';
+import 'package:pet_adote/screens/screen_perfil_usuario.dart';
 
 class CustomDrawer extends StatelessWidget {
+  Usuario user = Usuario();
+  CustomDrawer({this.user});
+
   @override
   Widget build(BuildContext context) {
     return Drawer(
@@ -10,10 +17,10 @@ class CustomDrawer extends StatelessWidget {
           //perfil do usuario
           UserAccountsDrawerHeader(
             //nome do usuario
-            accountName: Text("Seu nome",
+            accountName: Text(this.user.nome,
                 style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20)),
             //login do usuario
-            accountEmail: Text("user@mail.com",
+            accountEmail: Text(this.user.email,
                 style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20)),
             //imagem de fundo
             decoration: BoxDecoration(
@@ -37,7 +44,8 @@ class CustomDrawer extends StatelessWidget {
               style: TextStyle(fontFamily: 'KGred'),
             ),
             onTap: () {
-              Navigator.pushNamed(context, '/perfil');
+              Navigator.of(context).push(MaterialPageRoute(
+                  builder: (context) => Perfil_Usuario(user: this.user)));
             },
           ),
 
@@ -73,7 +81,8 @@ class CustomDrawer extends StatelessWidget {
               style: TextStyle(fontFamily: 'KGred'),
             ),
             onTap: () {
-              Navigator.pushNamed(context, '/atualizarcontato');
+              Navigator.of(context).push(MaterialPageRoute(
+                  builder: (context) => Atualizar_cadastro(user: this.user)));
             },
           ),
 
@@ -113,7 +122,8 @@ class CustomDrawer extends StatelessWidget {
               color: Colors.orangeAccent,
               //Ação do botão
               onPressed: () => {
-                Navigator.pushNamed(context, '/cadastropet'),
+                Navigator.of(context).push(MaterialPageRoute(
+                  builder: (context) => Cadastropet(user: this.user)))
               },
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,

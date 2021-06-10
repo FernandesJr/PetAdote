@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:pet_adote/models/usuario_model.dart';
 import 'package:pet_adote/screens/loading.dart';
+import 'package:pet_adote/screens/screen_anuncios.dart';
 
 class Splash_atualizado extends StatefulWidget {
+  Usuario user;
+  Splash_atualizado({this.user});
   @override
   _Splash_atualizadoState createState() => _Splash_atualizadoState();
 }
@@ -63,8 +67,10 @@ class _Splash_atualizadoState extends State<Splash_atualizado> {
     super.initState();
 
     Future.delayed(Duration(seconds: 3)).then((_) {
-      Navigator.pushNamedAndRemoveUntil(
-          context, '/homescreen', (route) => false);
+      Navigator.of(context).push(MaterialPageRoute(
+          builder: (context) => HomeScreen(
+                user: widget.user,
+              )));
     });
   }
 }

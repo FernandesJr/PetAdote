@@ -1,11 +1,24 @@
 import 'package:flutter/material.dart';
+import 'package:pet_adote/models/usuario_model.dart';
 
 class Perfil_Usuario extends StatefulWidget {
+  Usuario user;
+  Perfil_Usuario({this.user});
   @override
   _Perfil_UsuarioState createState() => _Perfil_UsuarioState();
 }
 
 class _Perfil_UsuarioState extends State<Perfil_Usuario> {
+  Usuario usuario;
+  var jsonUser;
+
+  @override
+  void initState() {
+    usuario = widget.user;
+    jsonUser = usuario.toJson();
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -54,7 +67,7 @@ class _Perfil_UsuarioState extends State<Perfil_Usuario> {
                     Container(
                       padding: EdgeInsets.all(5),
                       child: Text(
-                        "Marcones Lira da Silva Santos Amorim",
+                        this.usuario.nome,
                         style: TextStyle(
                           fontFamily: 'KGred',
                           fontSize: 16,
@@ -73,134 +86,146 @@ class _Perfil_UsuarioState extends State<Perfil_Usuario> {
               ),
 
               Container(
-                margin: EdgeInsets.only(
-                  left: 30,
-                ),
-                alignment: Alignment.topLeft,
-                child: RichText(
-                  text: TextSpan(
-                    children: const <TextSpan>[
-                      //Texto de estado
-                      TextSpan(
-                        text: 'Estado: ',
-                        style: TextStyle(
-                          fontFamily: 'KGred',
-                          fontSize: 15,
-                          color: Colors.orange,
-                        ),
+                  margin: EdgeInsets.only(
+                    left: 30,
+                  ),
+                  alignment: Alignment.topLeft,
+                  child: Column(
+                    children: [
+                      //Estado
+                      Row(
+                        children: [
+                          Text(
+                            "Estado: ",
+                            style: TextStyle(
+                              fontFamily: 'KGred',
+                              fontSize: 15,
+                              color: Colors.orange,
+                            ),
+                          ),
+                          Text(
+                            this.usuario.estado,
+                            style: TextStyle(
+                              fontFamily: 'KGred',
+                              fontSize: 16,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.black,
+                            ),
+                          ),
+                        ],
                       ),
-                      //aqui sera o que vai vir do banco o estado
-                      TextSpan(
-                        text: 'Pernambuco\n',
-                        style: TextStyle(
-                          fontFamily: 'KGred',
-                          fontSize: 15,
-                          color: Colors.black,
-                        ),
+                      //cidade
+                      Row(
+                        children: [
+                          Text(
+                            "Cidade: ",
+                            style: TextStyle(
+                              fontFamily: 'KGred',
+                              fontSize: 15,
+                              color: Colors.orange,
+                            ),
+                          ),
+                          Text(
+                            this.usuario.cidade,
+                            style: TextStyle(
+                              fontFamily: 'KGred',
+                              fontSize: 16,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.black,
+                            ),
+                          ),
+                        ],
                       ),
-
-                      //Texto de cidade
-                      TextSpan(
-                        text: 'Cidade: ',
-                        style: TextStyle(
-                          fontFamily: 'KGred',
-                          fontSize: 15,
-                          color: Colors.orange,
-                        ),
+                      //Bairro
+                      Row(
+                        children: [
+                          Text(
+                            "Bairro: ",
+                            style: TextStyle(
+                              fontFamily: 'KGred',
+                              fontSize: 15,
+                              color: Colors.orange,
+                            ),
+                          ),
+                          Text(
+                            this.usuario.bairro,
+                            style: TextStyle(
+                              fontFamily: 'KGred',
+                              fontSize: 16,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.black,
+                            ),
+                          ),
+                        ],
                       ),
-                      //aqui sera o que vai vir do banco a cidade
-                      TextSpan(
-                        text: 'Lagoa dos gato\n',
-                        style: TextStyle(
-                          fontFamily: 'KGred',
-                          fontSize: 15,
-                          color: Colors.black,
-                        ),
+                      //Rua
+                      Row(
+                        children: [
+                          Text(
+                            "Rua: ",
+                            style: TextStyle(
+                              fontFamily: 'KGred',
+                              fontSize: 15,
+                              color: Colors.orange,
+                            ),
+                          ),
+                          Text(
+                            this.usuario.rua,
+                            style: TextStyle(
+                              fontFamily: 'KGred',
+                              fontSize: 16,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.black,
+                            ),
+                          ),
+                        ],
                       ),
-
-                      //Texto de bairro
-                      TextSpan(
-                        text: 'Bairro: ',
-                        style: TextStyle(
-                          fontFamily: 'KGred',
-                          fontSize: 15,
-                          color: Colors.orange,
-                        ),
+                      //cep
+                      Row(
+                        children: [
+                          Text(
+                            "CEP: ",
+                            style: TextStyle(
+                              fontFamily: 'KGred',
+                              fontSize: 15,
+                              color: Colors.orange,
+                            ),
+                          ),
+                          Text(
+                            this.usuario.cep,
+                            style: TextStyle(
+                              fontFamily: 'KGred',
+                              fontSize: 16,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.black,
+                            ),
+                          ),
+                        ],
                       ),
-
-                      //aqui sera o que vai vir do banco o bairro
-                      TextSpan(
-                        text: 'bairo do centro dos gatos\n',
-                        style: TextStyle(
-                          fontFamily: 'KGred',
-                          fontSize: 15,
-                          color: Colors.black,
-                        ),
-                      ),
-
-                      //Texto de rua
-                      TextSpan(
-                        text: 'Rua: ',
-                        style: TextStyle(
-                          fontFamily: 'KGred',
-                          fontSize: 15,
-                          color: Colors.orange,
-                        ),
-                      ),
-
-                      //aqui sera o que vai vir do banco a rua
-                      TextSpan(
-                        text: 'rua dos gato espantado\n',
-                        style: TextStyle(
-                          fontFamily: 'KGred',
-                          fontSize: 15,
-                          color: Colors.black,
-                        ),
-                      ),
-
-                      //Texto de CEP
-                      TextSpan(
-                        text: 'CEP: ',
-                        style: TextStyle(
-                          fontFamily: 'KGred',
-                          fontSize: 15,
-                          color: Colors.orange,
-                        ),
-                      ),
-
-                      //aqui sera o que vai vir do banco o CEP
-                      TextSpan(
-                        text: '55555-000\n',
-                        style: TextStyle(
-                          fontFamily: 'KGred',
-                          fontSize: 15,
-                          color: Colors.black,
-                        ),
-                      ),
-
-                      //Texto de Contato
-                      TextSpan(
-                        text: 'Telefone: ',
-                        style: TextStyle(
-                          fontFamily: 'KGred',
-                          fontSize: 15,
-                          color: Colors.orange,
-                        ),
-                      ),
-
-                      //aqui sera o que vai vir do banco o Contato
-                      TextSpan(
-                        text: '(81) 90909-0909\n',
-                        style: TextStyle(
-                          fontFamily: 'KGred',
-                          fontSize: 15,
-                          color: Colors.black,
-                        ),
+                      //Tel
+                      Row(
+                        children: [
+                          Text(
+                            "Telefone: ",
+                            style: TextStyle(
+                              fontFamily: 'KGred',
+                              fontSize: 15,
+                              color: Colors.orange,
+                            ),
+                          ),
+                          Text(
+                            this.usuario.tel,
+                            style: TextStyle(
+                              fontFamily: 'KGred',
+                              fontSize: 16,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.black,
+                            ),
+                          ),
+                        ],
                       ),
                     ],
-                  ),
-                ),
-              ),
+                  )),
             ],
           ),
         ],

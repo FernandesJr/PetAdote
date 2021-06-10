@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:pet_adote/models/usuario_model.dart';
+import 'package:pet_adote/models/anuncios_model.dart';
 import 'package:pet_adote/screens/screen_drawer.dart';
 import 'package:pet_adote/screens/screen_animal_list.dart';
 
@@ -13,13 +14,6 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-    print("ESTOU NA SCREEN HOME EMAIL: " + widget.user.email);
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -58,7 +52,7 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
 
       //Janela lateral - Drawer
-      drawer: CustomDrawer(),
+      drawer: CustomDrawer(user: widget.user),
 
       //Tela de Anúncios dos Pets
       body: Animal_List(),

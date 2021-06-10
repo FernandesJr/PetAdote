@@ -286,6 +286,7 @@ class _Cadastro_endState extends State<Cadastro_end> {
       //Cadastrar User no DB
       this.usuario.imagem =
           "img.png"; //Para não ir null para o DB deixei esse nome como padrão
+      this.usuario.id = " "; //Para ir null
       var url = Uri.parse(
           'https://api-petadote0.000webhostapp.com/Retorno/usuariosCadastro.php');
       //toJson converte um Usuario para Json
